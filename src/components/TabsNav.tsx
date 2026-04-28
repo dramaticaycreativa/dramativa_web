@@ -22,10 +22,10 @@ export const TabsNav = ({ active, onChange }: TabsNavProps) => {
           aria-label="Inicio Dramativa"
         >
           <span className="font-display text-2xl md:text-3xl font-bold tracking-tight text-primary-deep">
-            Dramat
+            Drama
           </span>
           <span className="font-display text-2xl md:text-3xl font-bold italic text-gold group-hover:text-primary transition-colors">
-            iva
+            tiva
           </span>
           <span className="hidden md:inline text-xs uppercase tracking-[0.25em] text-muted-foreground ml-3">
             cartelera cultural
