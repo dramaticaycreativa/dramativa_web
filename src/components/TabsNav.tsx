@@ -21,7 +21,7 @@ export const TabsNav = ({ active, onChange }: TabsNavProps) => {
     <header className="sticky top-0 z-40 bg-background/85 backdrop-blur-md border-b border-border/60">
       <div className="container-stage flex items-center justify-between h-16 md:h-20">
         <button
-          onClick={() => onChange("dramativa")}
+          onClick={() => onChange("cartelera")}
           className="flex items-baseline gap-1 group"
           aria-label="Inicio Dramativa"
         >
