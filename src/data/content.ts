@@ -13,6 +13,7 @@ export interface CulturalEvent {
   image?: string;
   tags?: ("estreno" | "ultimas-funciones" | "gratis" | "destacado")[];
   views?: number;
+  ticketUrl?: string;
 }
 
 export const events: CulturalEvent[] = [
