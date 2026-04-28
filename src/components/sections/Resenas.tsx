@@ -1,37 +1,46 @@
 import { useMemo, useState } from "react";
-import { reviews } from "@/data/content";
+import { useReviews } from "@/hooks/useReviews";
+import { useEvents } from "@/hooks/useEvents";
 import { Stars } from "@/components/Stars";
-import { Search, Quote, Award, MessageSquarePlus } from "lucide-react";
+import { Search, Quote, Award, MessageSquarePlus, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { ReviewDialog } from "@/components/ReviewDialog";
+import type { Review, CulturalEvent } from "@/data/content";
 
 interface ObraGrouped {
   obra: string;
+  eventId: string;
   promedio: number;
   cantidad: number;
-  reviews: typeof reviews;
+  reviews: Review[];
 }
 
 export const Resenas = () => {
+  const { reviews, loading, refetch } = useReviews();
+  const { events } = useEvents();
   const [query, setQuery] = useState("");
+  const [reviewEvent, setReviewEvent] = useState<CulturalEvent | null>(null);
 
   const grouped = useMemo<ObraGrouped[]>(() => {
-    const map = new Map<string, typeof reviews>();
+    const map = new Map<string, Review[]>();
     reviews.forEach((r) => {
-      if (!map.has(r.obra)) map.set(r.obra, []);
-      map.get(r.obra)!.push(r);
+      if (!map.has(r.eventId)) map.set(r.eventId, []);
+      map.get(r.eventId)!.push(r);
     });
-    const arr: ObraGrouped[] = Array.from(map.entries()).map(([obra, rs]) => ({
-      obra,
+    const arr: ObraGrouped[] = Array.from(map.entries()).map(([eventId, rs]) => ({
+      eventId,
+      obra: rs[0].obra,
       reviews: rs,
       cantidad: rs.length,
       promedio: rs.reduce((a, b) => a + b.puntuacion, 0) / rs.length,
     }));
     arr.sort((a, b) => b.promedio - a.promedio);
     return arr.filter((o) => o.obra.toLowerCase().includes(query.toLowerCase()));
-  }, [query]);
+  }, [reviews, query]);
 
   const topObra = grouped[0];
+  const topEvent = topObra ? events.find((e) => e.id === topObra.eventId) ?? null : null;
 
   return (
     <article>
@@ -43,49 +52,71 @@ export const Resenas = () => {
           Reseñas
         </h1>
 
-        {/* Top valorada */}
-        {topObra && (
-          <div className="bg-gradient-stage text-white p-8 md:p-10 mb-12 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-gold/10 rounded-full -translate-y-32 translate-x-32 blur-3xl" />
-            <div className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-              <div>
-                <span className="inline-flex items-center gap-2 text-gold text-xs uppercase tracking-[0.3em] mb-3">
-                  <Award className="w-4 h-4" /> Obra mejor valorada
-                </span>
-                <h2 className="font-display text-3xl md:text-4xl mb-2">{topObra.obra}</h2>
-                <div className="flex items-center gap-3">
-                  <Stars value={topObra.promedio} size={20} />
-                  <span className="text-sm text-white/70">
-                    {topObra.promedio.toFixed(1)} · {topObra.cantidad} reseñas
-                  </span>
+        {loading ? (
+          <div className="flex justify-center py-20">
+            <Loader2 className="w-6 h-6 animate-spin text-gold" />
+          </div>
+        ) : reviews.length === 0 ? (
+          <div className="text-center py-20 text-muted-foreground border border-dashed border-border">
+            <p className="font-display italic text-2xl mb-2">Aún no hay reseñas publicadas.</p>
+            <p className="text-sm">Sé la primera persona en compartir tu experiencia desde la cartelera.</p>
+          </div>
+        ) : (
+          <>
+            {topObra && (
+              <div className="bg-gradient-stage text-white p-8 md:p-10 mb-12 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-gold/10 rounded-full -translate-y-32 translate-x-32 blur-3xl" />
+                <div className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                  <div>
+                    <span className="inline-flex items-center gap-2 text-gold text-xs uppercase tracking-[0.3em] mb-3">
+                      <Award className="w-4 h-4" /> Obra mejor valorada
+                    </span>
+                    <h2 className="font-display text-3xl md:text-4xl mb-2">{topObra.obra}</h2>
+                    <div className="flex items-center gap-3">
+                      <Stars value={topObra.promedio} size={20} />
+                      <span className="text-sm text-white/70">
+                        {topObra.promedio.toFixed(1)} · {topObra.cantidad} reseñas
+                      </span>
+                    </div>
+                  </div>
+                  {topEvent && (
+                    <Button
+                      onClick={() => setReviewEvent(topEvent)}
+                      className="bg-gold text-gold-foreground hover:bg-gold/90 rounded-none"
+                    >
+                      <MessageSquarePlus className="w-4 h-4 mr-2" /> Dejar reseña
+                    </Button>
+                  )}
                 </div>
               </div>
-              <Button className="bg-gold text-gold-foreground hover:bg-gold/90 rounded-none">
-                <MessageSquarePlus className="w-4 h-4 mr-2" /> Dejar reseña
-              </Button>
+            )}
+
+            <div className="relative mb-10 max-w-md">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <input
+                type="search"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Filtrar por obra…"
+                className="w-full bg-surface border border-border pl-11 pr-4 py-3 text-sm focus:outline-none focus:border-gold transition"
+              />
             </div>
-          </div>
+
+            <div className="space-y-12">
+              {grouped.map((g, gi) => (
+                <ObraBlock key={g.eventId} group={g} highlight={gi === 0} />
+              ))}
+            </div>
+          </>
         )}
-
-        {/* Search */}
-        <div className="relative mb-10 max-w-md">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-          <input
-            type="search"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Filtrar por obra…"
-            className="w-full bg-surface border border-border pl-11 pr-4 py-3 text-sm focus:outline-none focus:border-gold transition"
-          />
-        </div>
-
-        {/* Lista */}
-        <div className="space-y-12">
-          {grouped.map((g, gi) => (
-            <ObraBlock key={g.obra} group={g} highlight={gi === 0} />
-          ))}
-        </div>
       </section>
+
+      <ReviewDialog
+        open={!!reviewEvent}
+        onOpenChange={(o) => !o && setReviewEvent(null)}
+        event={reviewEvent}
+        onSubmitted={refetch}
+      />
     </article>
   );
 };
