@@ -220,6 +220,16 @@ const EventCard = ({
             <span className="text-xs uppercase tracking-widest text-muted-foreground">Entrada</span>
             <span className="font-display text-2xl text-primary-deep">{event.price}</span>
           </div>
+          {event.ticketUrl && (
+            <a
+              href={event.ticketUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full inline-flex items-center justify-center gap-2 bg-gold text-gold-foreground hover:bg-gold/90 px-4 py-2.5 text-sm font-semibold uppercase tracking-wider transition-colors"
+            >
+              <Ticket className="w-4 h-4" /> Comprar entrada
+            </a>
+          )}
           <a
             href={event.mapsUrl}
             target="_blank"
