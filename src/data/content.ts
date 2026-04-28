@@ -29,6 +29,7 @@ export const events: CulturalEvent[] = [
     description:
       "Una relectura libre del clásico de Chéjov, atravesada por la mirada contemporánea de tres dramaturgas locales. Una obra sobre el deseo, el fracaso y la búsqueda artística.",
     tags: ["estreno", "destacado"],
+    ticketUrl: "https://www.alternativateatral.com/",
     views: 1240,
   },
   {
@@ -57,6 +58,7 @@ export const events: CulturalEvent[] = [
     description:
       "Una noche íntima de jazz contemporáneo con composiciones originales del trío liderado por la pianista Lucía Méndez.",
     views: 540,
+    ticketUrl: "https://www.passline.com/",
   },
   {
     id: "4",
@@ -84,6 +86,7 @@ export const events: CulturalEvent[] = [
     description:
       "Una versión despojada del clásico shakesperiano interpretada por un solo actor sobre un escenario vacío.",
     tags: ["ultimas-funciones"],
+    ticketUrl: "https://www.alternativateatral.com/",
     views: 1680,
   },
   {
@@ -98,6 +101,7 @@ export const events: CulturalEvent[] = [
     description:
       "Drama familiar sobre el regreso a la casa de la infancia. Texto y dirección de Mariana Solís.",
     tags: ["estreno"],
+    ticketUrl: "https://www.alternativateatral.com/",
     views: 760,
   },
   {
@@ -111,6 +115,7 @@ export const events: CulturalEvent[] = [
     price: "$4.000",
     description: "Programa con obras de Schubert, Piazzolla y compositoras contemporáneas argentinas.",
     views: 410,
+    ticketUrl: "https://www.tuentrada.com/",
   },
   {
     id: "8",
@@ -123,6 +128,7 @@ export const events: CulturalEvent[] = [
     price: "$3.500",
     description: "Función especial del clásico de Bergman con introducción crítica.",
     views: 980,
+    ticketUrl: "https://www.malba.org.ar/",
   },
   {
     id: "9",
@@ -135,6 +141,7 @@ export const events: CulturalEvent[] = [
     price: "$6.500",
     description: "Monólogo experimental que explora los límites del lenguaje teatral.",
     tags: ["destacado"],
+    ticketUrl: "https://www.alternativateatral.com/",
     views: 1340,
   },
 ];
