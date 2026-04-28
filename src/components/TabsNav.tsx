@@ -9,7 +9,6 @@ interface TabsNavProps {
 }
 
 const tabs = [
-  { id: "dramativa", label: "Dramativa" },
   { id: "cartelera", label: "Cartelera" },
   { id: "resenas", label: "Reseñas" },
   { id: "estudiar", label: "Dónde estudiar" },
