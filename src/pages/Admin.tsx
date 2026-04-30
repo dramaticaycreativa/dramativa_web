@@ -280,7 +280,7 @@ const Admin = () => {
               <Field label="Link compra entrada" value={form.ticket_url} onChange={(v) => setForm({ ...form, ticket_url: v })} placeholder="https://…" required={false} />
             </div>
 
-            <TextArea label="Descripción" value={form.description} onChange={(v) => setForm({ ...form, description: v })} rows={4} />
+            <TextArea label="Descripción" value={form.description} onChange={(v) => setForm({ ...form, description: v })} rows={10} maxLength={3000} />
 
             <div>
               <span className="block text-xs uppercase tracking-widest text-muted-foreground mb-2">Etiquetas</span>
