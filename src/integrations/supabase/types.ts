@@ -14,6 +14,30 @@ export type Database = {
   }
   public: {
     Tables: {
+      app_settings: {
+        Row: {
+          created_at: string
+          id: string
+          key: string
+          updated_at: string
+          value: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          key: string
+          updated_at?: string
+          value: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          key?: string
+          updated_at?: string
+          value?: string
+        }
+        Relationships: []
+      }
       events: {
         Row: {
           address: string
@@ -173,7 +197,7 @@ export type Database = {
     Enums: {
       app_role: "admin" | "user"
       event_tag: "estreno" | "ultimas-funciones" | "gratis" | "destacado"
-      event_type: "teatro" | "cine" | "musica" | "muestra"
+      event_type: "teatro" | "cine" | "musica" | "muestra" | "especial"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -303,7 +327,7 @@ export const Constants = {
     Enums: {
       app_role: ["admin", "user"],
       event_tag: ["estreno", "ultimas-funciones", "gratis", "destacado"],
-      event_type: ["teatro", "cine", "musica", "muestra"],
+      event_type: ["teatro", "cine", "musica", "muestra", "especial"],
     },
   },
 } as const
