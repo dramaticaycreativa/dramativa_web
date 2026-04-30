@@ -130,6 +130,33 @@ const Admin = () => {
     else { toast.success("Función eliminada"); refetch(); }
   };
 
+  const handleDuplicate = (ev: CulturalEvent) => {
+    setEditing(null);
+    setForm({
+      title: `${ev.title} (copia)`,
+      type: ev.type,
+      date: toLocalInput(ev.date),
+      venue: ev.venue,
+      address: ev.address,
+      maps_url: ev.mapsUrl ?? "",
+      price: ev.price,
+      description: ev.description,
+      ticket_url: ev.ticketUrl ?? "",
+      tags: ev.tags ?? [],
+    });
+    setOpen(true);
+    toast.info("Editá título, fecha y descripción y guardá como nueva función.");
+  };
+
+  const handleSaveLabel = async () => {
+    if (!labelDraft.trim()) return;
+    setSavingLabel(true);
+    const err = await saveEspecialLabel(labelDraft.trim());
+    setSavingLabel(false);
+    if (err) toast.error(err.message);
+    else toast.success("Nombre del filtro actualizado");
+  };
+
   const toggleTag = (t: EventTag) => {
     setForm((f) => ({
       ...f,
