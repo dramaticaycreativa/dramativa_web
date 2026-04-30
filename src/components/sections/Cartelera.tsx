@@ -42,6 +42,7 @@ const PER_PAGE = 6;
 
 export const Cartelera = ({ onGoReviews: _ }: { onGoReviews: () => void }) => {
   const { events, loading } = useEvents();
+  const { value: especialLabel } = useAppSetting("especial_label", "Especial");
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<EventType | "todos">("todos");
   const [expanded, setExpanded] = useState<string | null>(null);
