@@ -4,26 +4,27 @@ import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useEvents } from "@/hooks/useEvents";
+import { useAppSetting } from "@/hooks/useAppSettings";
 import { Button } from "@/components/ui/button";
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription,
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { ArrowLeft, Plus, Pencil, Trash2, LogOut, Loader2 } from "lucide-react";
+import { ArrowLeft, Plus, Pencil, Trash2, LogOut, Loader2, Copy, Save } from "lucide-react";
 import type { CulturalEvent, EventTag, EventType } from "@/data/content";
 
-const TYPES: EventType[] = ["teatro", "cine", "musica", "muestra"];
+const TYPES: EventType[] = ["teatro", "cine", "musica", "muestra", "especial"];
 const TAGS: EventTag[] = ["estreno", "ultimas-funciones", "gratis", "destacado"];
 
 const eventSchema = z.object({
   title: z.string().trim().min(2).max(140),
-  type: z.enum(["teatro", "cine", "musica", "muestra"]),
+  type: z.enum(["teatro", "cine", "musica", "muestra", "especial"]),
   date: z.string().min(1),
   venue: z.string().trim().min(2).max(140),
   address: z.string().trim().min(2).max(200),
   maps_url: z.string().url().or(z.literal("")),
   price: z.string().trim().min(1).max(40),
-  description: z.string().trim().min(5).max(1000),
+  description: z.string().trim().min(5).max(3000),
   ticket_url: z.string().url().or(z.literal("")),
   tags: z.array(z.enum(["estreno", "ultimas-funciones", "gratis", "destacado"])),
 });
@@ -43,10 +44,15 @@ const Admin = () => {
   const navigate = useNavigate();
   const { user, isAdmin, loading, signOut } = useAuth();
   const { events, refetch } = useEvents();
+  const { value: especialLabel, save: saveEspecialLabel } = useAppSetting("especial_label", "Especial");
+  const [labelDraft, setLabelDraft] = useState("");
+  const [savingLabel, setSavingLabel] = useState(false);
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<CulturalEvent | null>(null);
   const [form, setForm] = useState<FormState>(empty);
   const [busy, setBusy] = useState(false);
+
+  useEffect(() => { setLabelDraft(especialLabel); }, [especialLabel]);
 
   useEffect(() => {
     if (!loading && !user) navigate("/auth");
@@ -124,6 +130,33 @@ const Admin = () => {
     else { toast.success("Función eliminada"); refetch(); }
   };
 
+  const handleDuplicate = (ev: CulturalEvent) => {
+    setEditing(null);
+    setForm({
+      title: `${ev.title} (copia)`,
+      type: ev.type,
+      date: toLocalInput(ev.date),
+      venue: ev.venue,
+      address: ev.address,
+      maps_url: ev.mapsUrl ?? "",
+      price: ev.price,
+      description: ev.description,
+      ticket_url: ev.ticketUrl ?? "",
+      tags: ev.tags ?? [],
+    });
+    setOpen(true);
+    toast.info("Editá título, fecha y descripción y guardá como nueva función.");
+  };
+
+  const handleSaveLabel = async () => {
+    if (!labelDraft.trim()) return;
+    setSavingLabel(true);
+    const err = await saveEspecialLabel(labelDraft.trim());
+    setSavingLabel(false);
+    if (err) toast.error(err.message);
+    else toast.success("Nombre del filtro actualizado");
+  };
+
   const toggleTag = (t: EventTag) => {
     setForm((f) => ({
       ...f,
@@ -161,6 +194,31 @@ const Admin = () => {
           </Button>
         </div>
 
+        {/* Editor del nombre del filtro "Especial" */}
+        <div className="bg-surface border border-gold/40 p-5 mb-8">
+          <p className="text-xs uppercase tracking-[0.3em] text-gold mb-2">Filtro especial</p>
+          <p className="text-sm text-muted-foreground mb-3">
+            Cambiá el nombre que aparece en la cartelera para destacar eventos puntuales (ej: "Festival de las Alturas", "Feria del Libro"). Los eventos con tipo <strong>especial</strong> se mostrarán bajo este filtro.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-2">
+            <input
+              value={labelDraft}
+              onChange={(e) => setLabelDraft(e.target.value)}
+              maxLength={40}
+              placeholder="Ej: Festival de las Alturas"
+              className="flex-1 bg-background border border-border px-3 py-2 text-sm focus:outline-none focus:border-gold transition"
+            />
+            <Button
+              onClick={handleSaveLabel}
+              disabled={savingLabel || labelDraft.trim() === especialLabel}
+              className="bg-gold text-gold-foreground hover:bg-gold/90 rounded-none"
+            >
+              <Save className="w-3.5 h-3.5 mr-2" />
+              {savingLabel ? "Guardando…" : "Guardar nombre"}
+            </Button>
+          </div>
+        </div>
+
         <div className="space-y-3">
           {events.map((ev) => (
             <article key={ev.id} className="bg-surface border border-border p-5 flex flex-col md:flex-row md:items-center gap-4">
@@ -181,10 +239,13 @@ const Admin = () => {
                 </p>
               </div>
               <div className="flex gap-2 shrink-0">
-                <Button variant="outline" size="sm" onClick={() => openEdit(ev)} className="rounded-none">
+                <Button variant="outline" size="sm" onClick={() => handleDuplicate(ev)} className="rounded-none" title="Duplicar">
+                  <Copy className="w-3.5 h-3.5" />
+                </Button>
+                <Button variant="outline" size="sm" onClick={() => openEdit(ev)} className="rounded-none" title="Editar">
                   <Pencil className="w-3.5 h-3.5" />
                 </Button>
-                <Button variant="outline" size="sm" onClick={() => handleDelete(ev)} className="rounded-none text-curtain border-curtain/40 hover:bg-curtain hover:text-white">
+                <Button variant="outline" size="sm" onClick={() => handleDelete(ev)} className="rounded-none text-curtain border-curtain/40 hover:bg-curtain hover:text-white" title="Eliminar">
                   <Trash2 className="w-3.5 h-3.5" />
                 </Button>
               </div>
@@ -219,7 +280,7 @@ const Admin = () => {
               <Field label="Link compra entrada" value={form.ticket_url} onChange={(v) => setForm({ ...form, ticket_url: v })} placeholder="https://…" required={false} />
             </div>
 
-            <TextArea label="Descripción" value={form.description} onChange={(v) => setForm({ ...form, description: v })} rows={4} />
+            <TextArea label="Descripción" value={form.description} onChange={(v) => setForm({ ...form, description: v })} rows={10} maxLength={3000} />
 
             <div>
               <span className="block text-xs uppercase tracking-widest text-muted-foreground mb-2">Etiquetas</span>
@@ -286,15 +347,21 @@ const SelectField = ({ label, value, onChange, options }: { label: string; value
   </label>
 );
 
-const TextArea = ({ label, value, onChange, rows }: { label: string; value: string; onChange: (v: string) => void; rows: number }) => (
+const TextArea = ({ label, value, onChange, rows, maxLength }: { label: string; value: string; onChange: (v: string) => void; rows: number; maxLength?: number }) => (
   <label className="block">
-    <span className="block text-xs uppercase tracking-widest text-muted-foreground mb-1.5">{label}</span>
+    <div className="flex items-baseline justify-between mb-1.5">
+      <span className="block text-xs uppercase tracking-widest text-muted-foreground">{label}</span>
+      {maxLength && (
+        <span className="text-[10px] text-muted-foreground tabular-nums">{value.length}/{maxLength}</span>
+      )}
+    </div>
     <textarea
       value={value}
       onChange={(e) => onChange(e.target.value)}
       rows={rows}
+      maxLength={maxLength}
       required
-      className="w-full bg-background border border-border px-3 py-2 text-sm focus:outline-none focus:border-gold transition resize-none"
+      className="w-full bg-background border border-border px-3 py-2 text-sm focus:outline-none focus:border-gold transition resize-y min-h-[120px]"
     />
   </label>
 );

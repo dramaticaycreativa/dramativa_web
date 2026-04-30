@@ -4,7 +4,7 @@
 // estáticos que no cambian seguido (escuelas).
 // ============================================================
 
-export type EventType = "teatro" | "cine" | "musica" | "muestra";
+export type EventType = "teatro" | "cine" | "musica" | "muestra" | "especial";
 export type EventTag = "estreno" | "ultimas-funciones" | "gratis" | "destacado";
 
 export interface CulturalEvent {

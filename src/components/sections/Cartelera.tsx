@@ -1,7 +1,8 @@
 import { useMemo, useState } from "react";
 import { useEvents } from "@/hooks/useEvents";
+import { useAppSetting } from "@/hooks/useAppSettings";
 import { type EventType, type CulturalEvent } from "@/data/content";
-import { Calendar, MapPin, Search, Theater, Music, Film, Image as ImageIcon, ArrowUpRight, Ticket, Loader2 } from "lucide-react";
+import { Calendar, MapPin, Search, Theater, Music, Film, Image as ImageIcon, ArrowUpRight, Ticket, Loader2, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { ReviewDialog } from "@/components/ReviewDialog";
@@ -11,6 +12,7 @@ const typeMeta: Record<EventType, { label: string; Icon: typeof Theater }> = {
   cine: { label: "Cine", Icon: Film },
   musica: { label: "Música", Icon: Music },
   muestra: { label: "Muestra", Icon: ImageIcon },
+  especial: { label: "Especial", Icon: Sparkles },
 };
 
 const tagStyles: Record<string, string> = {
@@ -40,6 +42,7 @@ const PER_PAGE = 6;
 
 export const Cartelera = ({ onGoReviews: _ }: { onGoReviews: () => void }) => {
   const { events, loading } = useEvents();
+  const { value: especialLabel } = useAppSetting("especial_label", "Especial");
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<EventType | "todos">("todos");
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -93,7 +96,7 @@ export const Cartelera = ({ onGoReviews: _ }: { onGoReviews: () => void }) => {
             />
           </div>
           <div className="flex flex-wrap gap-2">
-            {(["todos", "teatro", "cine", "musica", "muestra"] as const).map((t) => (
+            {(["todos", "teatro", "cine", "musica", "muestra", "especial"] as const).map((t) => (
               <button
                 key={t}
                 onClick={() => { setFilter(t); setPage(1); }}
@@ -101,10 +104,11 @@ export const Cartelera = ({ onGoReviews: _ }: { onGoReviews: () => void }) => {
                   "px-4 py-2 text-sm border transition-all",
                   filter === t
                     ? "bg-primary-deep text-primary-foreground border-primary-deep"
-                    : "border-border text-muted-foreground hover:border-gold hover:text-foreground"
+                    : "border-border text-muted-foreground hover:border-gold hover:text-foreground",
+                  t === "especial" && filter !== t && "border-gold/60 text-gold"
                 )}
               >
-                {t === "todos" ? "Todos" : typeMeta[t].label}
+                {t === "todos" ? "Todos" : t === "especial" ? especialLabel : typeMeta[t].label}
               </button>
             ))}
           </div>
