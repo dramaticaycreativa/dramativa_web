@@ -194,6 +194,31 @@ const Admin = () => {
           </Button>
         </div>
 
+        {/* Editor del nombre del filtro "Especial" */}
+        <div className="bg-surface border border-gold/40 p-5 mb-8">
+          <p className="text-xs uppercase tracking-[0.3em] text-gold mb-2">Filtro especial</p>
+          <p className="text-sm text-muted-foreground mb-3">
+            Cambiá el nombre que aparece en la cartelera para destacar eventos puntuales (ej: "Festival de las Alturas", "Feria del Libro"). Los eventos con tipo <strong>especial</strong> se mostrarán bajo este filtro.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-2">
+            <input
+              value={labelDraft}
+              onChange={(e) => setLabelDraft(e.target.value)}
+              maxLength={40}
+              placeholder="Ej: Festival de las Alturas"
+              className="flex-1 bg-background border border-border px-3 py-2 text-sm focus:outline-none focus:border-gold transition"
+            />
+            <Button
+              onClick={handleSaveLabel}
+              disabled={savingLabel || labelDraft.trim() === especialLabel}
+              className="bg-gold text-gold-foreground hover:bg-gold/90 rounded-none"
+            >
+              <Save className="w-3.5 h-3.5 mr-2" />
+              {savingLabel ? "Guardando…" : "Guardar nombre"}
+            </Button>
+          </div>
+        </div>
+
         <div className="space-y-3">
           {events.map((ev) => (
             <article key={ev.id} className="bg-surface border border-border p-5 flex flex-col md:flex-row md:items-center gap-4">
@@ -214,10 +239,13 @@ const Admin = () => {
                 </p>
               </div>
               <div className="flex gap-2 shrink-0">
-                <Button variant="outline" size="sm" onClick={() => openEdit(ev)} className="rounded-none">
+                <Button variant="outline" size="sm" onClick={() => handleDuplicate(ev)} className="rounded-none" title="Duplicar">
+                  <Copy className="w-3.5 h-3.5" />
+                </Button>
+                <Button variant="outline" size="sm" onClick={() => openEdit(ev)} className="rounded-none" title="Editar">
                   <Pencil className="w-3.5 h-3.5" />
                 </Button>
-                <Button variant="outline" size="sm" onClick={() => handleDelete(ev)} className="rounded-none text-curtain border-curtain/40 hover:bg-curtain hover:text-white">
+                <Button variant="outline" size="sm" onClick={() => handleDelete(ev)} className="rounded-none text-curtain border-curtain/40 hover:bg-curtain hover:text-white" title="Eliminar">
                   <Trash2 className="w-3.5 h-3.5" />
                 </Button>
               </div>
