@@ -1,7 +1,8 @@
 import { useMemo, useState } from "react";
 import { useEvents } from "@/hooks/useEvents";
+import { useAppSetting } from "@/hooks/useAppSettings";
 import { type EventType, type CulturalEvent } from "@/data/content";
-import { Calendar, MapPin, Search, Theater, Music, Film, Image as ImageIcon, ArrowUpRight, Ticket, Loader2 } from "lucide-react";
+import { Calendar, MapPin, Search, Theater, Music, Film, Image as ImageIcon, ArrowUpRight, Ticket, Loader2, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { ReviewDialog } from "@/components/ReviewDialog";
@@ -11,6 +12,7 @@ const typeMeta: Record<EventType, { label: string; Icon: typeof Theater }> = {
   cine: { label: "Cine", Icon: Film },
   musica: { label: "Música", Icon: Music },
   muestra: { label: "Muestra", Icon: ImageIcon },
+  especial: { label: "Especial", Icon: Sparkles },
 };
 
 const tagStyles: Record<string, string> = {
