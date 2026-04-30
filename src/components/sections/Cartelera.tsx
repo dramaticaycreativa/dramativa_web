@@ -96,7 +96,7 @@ export const Cartelera = ({ onGoReviews: _ }: { onGoReviews: () => void }) => {
             />
           </div>
           <div className="flex flex-wrap gap-2">
-            {(["todos", "teatro", "cine", "musica", "muestra"] as const).map((t) => (
+            {(["todos", "teatro", "cine", "musica", "muestra", "especial"] as const).map((t) => (
               <button
                 key={t}
                 onClick={() => { setFilter(t); setPage(1); }}
@@ -104,10 +104,11 @@ export const Cartelera = ({ onGoReviews: _ }: { onGoReviews: () => void }) => {
                   "px-4 py-2 text-sm border transition-all",
                   filter === t
                     ? "bg-primary-deep text-primary-foreground border-primary-deep"
-                    : "border-border text-muted-foreground hover:border-gold hover:text-foreground"
+                    : "border-border text-muted-foreground hover:border-gold hover:text-foreground",
+                  t === "especial" && filter !== t && "border-gold/60 text-gold"
                 )}
               >
-                {t === "todos" ? "Todos" : typeMeta[t].label}
+                {t === "todos" ? "Todos" : t === "especial" ? especialLabel : typeMeta[t].label}
               </button>
             ))}
           </div>
