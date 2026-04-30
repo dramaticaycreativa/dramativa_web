@@ -44,10 +44,15 @@ const Admin = () => {
   const navigate = useNavigate();
   const { user, isAdmin, loading, signOut } = useAuth();
   const { events, refetch } = useEvents();
+  const { value: especialLabel, save: saveEspecialLabel } = useAppSetting("especial_label", "Especial");
+  const [labelDraft, setLabelDraft] = useState("");
+  const [savingLabel, setSavingLabel] = useState(false);
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<CulturalEvent | null>(null);
   const [form, setForm] = useState<FormState>(empty);
   const [busy, setBusy] = useState(false);
+
+  useEffect(() => { setLabelDraft(especialLabel); }, [especialLabel]);
 
   useEffect(() => {
     if (!loading && !user) navigate("/auth");
