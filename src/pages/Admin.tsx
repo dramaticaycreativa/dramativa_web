@@ -4,26 +4,27 @@ import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useEvents } from "@/hooks/useEvents";
+import { useAppSetting } from "@/hooks/useAppSettings";
 import { Button } from "@/components/ui/button";
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription,
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { ArrowLeft, Plus, Pencil, Trash2, LogOut, Loader2 } from "lucide-react";
+import { ArrowLeft, Plus, Pencil, Trash2, LogOut, Loader2, Copy, Save } from "lucide-react";
 import type { CulturalEvent, EventTag, EventType } from "@/data/content";
 
-const TYPES: EventType[] = ["teatro", "cine", "musica", "muestra"];
+const TYPES: EventType[] = ["teatro", "cine", "musica", "muestra", "especial"];
 const TAGS: EventTag[] = ["estreno", "ultimas-funciones", "gratis", "destacado"];
 
 const eventSchema = z.object({
   title: z.string().trim().min(2).max(140),
-  type: z.enum(["teatro", "cine", "musica", "muestra"]),
+  type: z.enum(["teatro", "cine", "musica", "muestra", "especial"]),
   date: z.string().min(1),
   venue: z.string().trim().min(2).max(140),
   address: z.string().trim().min(2).max(200),
   maps_url: z.string().url().or(z.literal("")),
   price: z.string().trim().min(1).max(40),
-  description: z.string().trim().min(5).max(1000),
+  description: z.string().trim().min(5).max(3000),
   ticket_url: z.string().url().or(z.literal("")),
   tags: z.array(z.enum(["estreno", "ultimas-funciones", "gratis", "destacado"])),
 });
