@@ -347,15 +347,21 @@ const SelectField = ({ label, value, onChange, options }: { label: string; value
   </label>
 );
 
-const TextArea = ({ label, value, onChange, rows }: { label: string; value: string; onChange: (v: string) => void; rows: number }) => (
+const TextArea = ({ label, value, onChange, rows, maxLength }: { label: string; value: string; onChange: (v: string) => void; rows: number; maxLength?: number }) => (
   <label className="block">
-    <span className="block text-xs uppercase tracking-widest text-muted-foreground mb-1.5">{label}</span>
+    <div className="flex items-baseline justify-between mb-1.5">
+      <span className="block text-xs uppercase tracking-widest text-muted-foreground">{label}</span>
+      {maxLength && (
+        <span className="text-[10px] text-muted-foreground tabular-nums">{value.length}/{maxLength}</span>
+      )}
+    </div>
     <textarea
       value={value}
       onChange={(e) => onChange(e.target.value)}
       rows={rows}
+      maxLength={maxLength}
       required
-      className="w-full bg-background border border-border px-3 py-2 text-sm focus:outline-none focus:border-gold transition resize-none"
+      className="w-full bg-background border border-border px-3 py-2 text-sm focus:outline-none focus:border-gold transition resize-y min-h-[120px]"
     />
   </label>
 );
