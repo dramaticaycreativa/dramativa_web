@@ -44,6 +44,7 @@ export type Database = {
           created_at: string
           date: string
           description: string
+          hidden: boolean
           id: string
           image: string | null
           maps_url: string | null
@@ -60,6 +61,7 @@ export type Database = {
           created_at?: string
           date: string
           description: string
+          hidden?: boolean
           id?: string
           image?: string | null
           maps_url?: string | null
@@ -76,6 +78,7 @@ export type Database = {
           created_at?: string
           date?: string
           description?: string
+          hidden?: boolean
           id?: string
           image?: string | null
           maps_url?: string | null

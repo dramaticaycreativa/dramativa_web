@@ -10,7 +10,7 @@ import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription,
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { ArrowLeft, Plus, Pencil, Trash2, LogOut, Loader2, Copy, Save } from "lucide-react";
+import { ArrowLeft, Plus, Pencil, Trash2, LogOut, Loader2, Copy, Save, Eye, EyeOff } from "lucide-react";
 import type { CulturalEvent, EventTag, EventType } from "@/data/content";
 
 const TYPES: EventType[] = ["teatro", "cine", "musica", "muestra", "especial"];
@@ -123,6 +123,13 @@ const Admin = () => {
     }
   };
 
+  const handleToggleHidden = async (ev: CulturalEvent) => {
+    const next = !ev.hidden;
+    const { error } = await supabase.from("events").update({ hidden: next } as any).eq("id", ev.id);
+    if (error) toast.error(error.message);
+    else { toast.success(next ? "Función oculta en la cartelera pública" : "Función visible en la cartelera"); refetch(); }
+  };
+
   const handleDelete = async (ev: CulturalEvent) => {
     if (!confirm(`¿Eliminar "${ev.title}"? Esta acción no se puede deshacer.`)) return;
     const { error } = await supabase.from("events").delete().eq("id", ev.id);
@@ -221,12 +228,17 @@ const Admin = () => {
 
         <div className="space-y-3">
           {events.map((ev) => (
-            <article key={ev.id} className="bg-surface border border-border p-5 flex flex-col md:flex-row md:items-center gap-4">
+            <article key={ev.id} className={`bg-surface border border-border p-5 flex flex-col md:flex-row md:items-center gap-4 ${ev.hidden ? "opacity-60" : ""}`}>
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-1">
+                <div className="flex items-center gap-2 mb-1 flex-wrap">
                   <span className="text-[10px] uppercase tracking-widest bg-primary-deep text-primary-foreground px-2 py-0.5">
                     {ev.type}
                   </span>
+                  {ev.hidden && (
+                    <span className="text-[10px] uppercase tracking-widest bg-curtain text-white px-2 py-0.5 inline-flex items-center gap-1">
+                      <EyeOff className="w-3 h-3" /> Oculto
+                    </span>
+                  )}
                   {ev.tags?.map((t) => (
                     <span key={t} className="text-[10px] uppercase tracking-widest bg-gold-soft text-foreground px-2 py-0.5">
                       {t}
@@ -239,6 +251,15 @@ const Admin = () => {
                 </p>
               </div>
               <div className="flex gap-2 shrink-0">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handleToggleHidden(ev)}
+                  className="rounded-none"
+                  title={ev.hidden ? "Mostrar en cartelera" : "Ocultar de la cartelera"}
+                >
+                  {ev.hidden ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+                </Button>
                 <Button variant="outline" size="sm" onClick={() => handleDuplicate(ev)} className="rounded-none" title="Duplicar">
                   <Copy className="w-3.5 h-3.5" />
                 </Button>
