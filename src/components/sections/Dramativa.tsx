@@ -7,17 +7,46 @@ const TikTokIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
+// TODO: reemplazar por las URLs reales de Dramática y Creativa.
 const socials = [
-  { Icon: Instagram, label: "Instagram", href: "https://instagram.com" },
-  { Icon: TikTokIcon, label: "TikTok", href: "https://tiktok.com" },
-  { Icon: Facebook, label: "Facebook", href: "https://facebook.com" },
-  { Icon: Youtube, label: "YouTube", href: "https://youtube.com" },
+  { Icon: Instagram, label: "Instagram", href: "https://instagram.com/dramaticaycreativa" },
+  { Icon: TikTokIcon, label: "TikTok", href: "https://tiktok.com/@dramaticaycreativa" },
+  { Icon: Facebook, label: "Facebook", href: "https://facebook.com/dramaticaycreativa" },
+  { Icon: Youtube, label: "YouTube", href: "https://youtube.com/@dramaticaycreativa" },
+];
+
+const ejes = [
+  {
+    n: "01",
+    t: "Identidad vs. mandato",
+    d: "Lo que se espera de nosotras (maternidad, vocación, los roles asignados) tensionado con lo que realmente queremos ser.",
+  },
+  {
+    n: "02",
+    t: "El amor en sus zonas oscuras",
+    d: "Dependencia, control, sacrificio, imposibles. Hablar del amor sin endulzarlo.",
+  },
+  {
+    n: "03",
+    t: "Soledad vs. comunidad",
+    d: "Lo colectivo como respuesta al dolor individual. Encontrarse con otros como acto político.",
+  },
+  {
+    n: "04",
+    t: "Verdad vs. apariencia",
+    d: "Las redes, el “estar bien”, las estructuras que nos piden mostrar lo que no sentimos.",
+  },
+  {
+    n: "05",
+    t: "El teatro como experiencia transformadora",
+    d: "No entretenimiento: una herramienta para pensar, sentir y vincularse.",
+  },
 ];
 
 export const Dramativa = () => {
   return (
     <article>
-      {/* HERO */}
+      {/* HERO · MANIFIESTO */}
       <section className="relative bg-gradient-stage text-white overflow-hidden">
         <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top,_hsl(46_67%_56%/0.4),_transparent_60%)]" />
         <div className="container-stage relative grid md:grid-cols-12 gap-10 py-20 md:py-32 items-center">
@@ -26,12 +55,14 @@ export const Dramativa = () => {
               Manifiesto
             </p>
             <h1 className="font-display text-5xl md:text-7xl lg:text-8xl leading-[0.95] mb-6 text-balance">
-              El teatro <em className="text-gold not-italic font-normal italic">no se mira</em>,
-              <br /> se respira.
+              No traduzco obras.
+              <br />
+              <em className="text-gold not-italic font-normal italic">Traduzco lo que nos pasa.</em>
             </h1>
-            <p className="text-lg md:text-xl text-white/75 max-w-xl leading-relaxed">
-              Soy actriz, gestora y agitadora cultural. Dramativa es mi forma de sostener
-              y mostrar lo que pasa en las salas independientes que aún se atreven.
+            <p className="text-lg md:text-xl text-white/80 max-w-xl leading-relaxed">
+              Dramática y Creativa no es una agenda cultural. Es un puente entre el teatro
+              independiente jujeño y vos: una excusa para hablar de lo que sentimos, conectarnos
+              con otros y animarnos a mirar lo que muchas veces evitamos.
             </p>
           </div>
           <div className="md:col-span-5 animate-fade-up">
@@ -39,7 +70,7 @@ export const Dramativa = () => {
               <div className="absolute -inset-4 border border-gold/40 -rotate-2" />
               <img
                 src={portrait}
-                alt="Retrato editorial de la creadora de Dramativa"
+                alt="Retrato editorial de Dramática y Creativa"
                 width={1024}
                 height={1280}
                 className="relative w-full object-cover shadow-stage"
@@ -49,79 +80,86 @@ export const Dramativa = () => {
         </div>
       </section>
 
-      {/* QUIÉN SOY */}
+      {/* QUÉ ES */}
       <section className="container-stage py-20 md:py-28 max-w-4xl">
-        <p className="text-xs tracking-[0.4em] uppercase text-gold mb-4">A. Quién soy</p>
+        <p className="text-xs tracking-[0.4em] uppercase text-gold mb-4">A. Qué hago</p>
         <h2 className="font-display text-4xl md:text-5xl mb-10 text-balance">
-          Llegué al teatro buscando una forma de habitar el mundo.
+          Uso el teatro como excusa para nombrar lo que cuesta nombrar.
         </h2>
         <div className="prose prose-lg max-w-none text-foreground/85 leading-relaxed space-y-6">
           <p className="drop-cap text-lg">
-            Empecé a los catorce, en un sótano sin calefacción, leyendo a García Lorca con cinco
-            chicas más. No sabíamos que aquello era teatro: era una forma urgente de decirnos
-            cosas que en otros lados no se podían decir. Veintidós años después, sigo creyendo
-            que el escenario es ese mismo sótano: un lugar donde algo verdadero está por pasar.
+            Hago mediación emocional entre el público y el teatro independiente jujeño. Eso
+            significa que no escribo reseñas técnicas ni armo agenda: traduzco las obras en
+            preguntas, conflictos y emociones humanas. Convierto lo escénico en algo cercano,
+            actual, necesario.
           </p>
           <p>
-            Trabajé como actriz, como asistente de dirección, como productora, como acomodadora.
-            En cada rol entendí algo distinto sobre lo escénico: que el teatro independiente se
-            sostiene con cuerpos, no con presupuestos.
+            Mi propuesta no es que vayas a ver una obra. Es que te veas a vos en lo que ves.
+            Por eso no vendo funciones: activo experiencias.
+          </p>
+          <p>
+            Le hablo a quienes no van habitualmente al teatro pero sí consumen contenido que
+            los interpela: gente en búsqueda, atravesada emocionalmente, con preguntas sobre
+            el amor, la soledad, la vocación, la pertenencia. También a la comunidad cultural
+            que quiere sostener lo local desde un lugar sensible.
           </p>
         </div>
       </section>
 
       <div className="gold-rule container-stage" />
 
-      {/* CAMINO */}
+      {/* EJES */}
       <section className="bg-surface py-20 md:py-28">
         <div className="container-stage grid md:grid-cols-12 gap-12">
           <div className="md:col-span-4">
-            <p className="text-xs tracking-[0.4em] uppercase text-gold mb-4">B. Camino</p>
+            <p className="text-xs tracking-[0.4em] uppercase text-gold mb-4">B. Ejes</p>
             <h2 className="font-display text-4xl md:text-5xl leading-tight">
-              Lo que me <em className="text-primary">define</em> hoy.
+              Los temas que <em className="text-primary">vuelven</em> en todo lo que escribo.
             </h2>
+            <p className="text-muted-foreground mt-6 leading-relaxed">
+              No elijo obras al azar. Hay obsesiones que aparecen una y otra vez en mis guiones,
+              porque son las mismas obsesiones que veo en quienes me leen.
+            </p>
           </div>
-          <div className="md:col-span-8 space-y-10">
-            {[
-              {
-                t: "Me interesan las obras incómodas.",
-                d: "Las que no buscan agradar. Las que arriesgan forma, las que se animan al silencio largo, las que confían en el público adulto.",
-              },
-              {
-                t: "Construyo comunidad, no audiencia.",
-                d: "Dramativa no es un medio: es un punto de encuentro entre quienes hacen, quienes ven y quienes enseñan teatro en mi ciudad.",
-              },
-              {
-                t: "Escribo lo que veo.",
-                d: "Reseño cada obra que voy a ver. No para juzgar, sino para dejar registro de que algo, alguna noche, sucedió.",
-              },
-            ].map((b, i) => (
-              <div key={i} className="border-l-2 border-gold pl-6">
-                <h3 className="font-display text-2xl md:text-3xl mb-2">{b.t}</h3>
-                <p className="text-muted-foreground leading-relaxed">{b.d}</p>
+          <div className="md:col-span-8 space-y-8">
+            {ejes.map((e) => (
+              <div key={e.n} className="border-l-2 border-gold pl-6">
+                <div className="flex items-baseline gap-4 mb-2">
+                  <span className="font-display italic text-3xl text-gold">{e.n}</span>
+                  <h3 className="font-display text-2xl md:text-3xl">{e.t}</h3>
+                </div>
+                <p className="text-muted-foreground leading-relaxed">{e.d}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* PROYECCIÓN */}
+      {/* DIFERENCIAL */}
       <section className="container-stage py-20 md:py-28">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <p className="text-xs tracking-[0.4em] uppercase text-gold mb-4">C. Proyección</p>
+          <p className="text-xs tracking-[0.4em] uppercase text-gold mb-4">C. Diferencial</p>
           <h2 className="font-display text-4xl md:text-5xl text-balance">
-            Hacia dónde camina esto.
+            Por qué no soy una cuenta más de difusión.
           </h2>
         </div>
         <div className="grid md:grid-cols-3 gap-8">
           {[
-            { n: "01", t: "En un año", d: "Convertir Dramativa en referencia local de cartelera independiente, con publicación semanal y críticos invitados." },
-            { n: "02", t: "Profesionalmente", d: "Estrenar mi próxima obra como dramaturga y dirigir un ciclo de lecturas escénicas de autoras emergentes." },
-            { n: "03", t: "A largo plazo", d: "Sostener un espacio físico: una sala chica donde se pueda fallar, ensayar y empezar de nuevo." },
-          ].map((b) => (
-            <div key={b.n} className="ticket-card p-8">
-              <div className="font-display italic text-5xl text-gold mb-4">{b.n}</div>
-              <h3 className="font-display text-xl mb-3">{b.t}</h3>
+            {
+              t: "No es agenda.",
+              d: "No te digo qué hay esta semana. Te muestro qué te puede pasar a vos viendo lo que hay esta semana.",
+            },
+            {
+              t: "No es crítica clásica.",
+              d: "No califico actuaciones ni puesta en escena. Interpreto lo que la obra moviliza, lo que deja resonando.",
+            },
+            {
+              t: "No es contenido neutro.",
+              d: "Busco identificación incómoda, catarsis, comunidad. Que dudes, que te cuestiones, que te sientas nombrado.",
+            },
+          ].map((b, i) => (
+            <div key={i} className="ticket-card p-8">
+              <h3 className="font-display text-2xl mb-3 text-primary-deep">{b.t}</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">{b.d}</p>
             </div>
           ))}
@@ -132,9 +170,9 @@ export const Dramativa = () => {
       <section className="bg-gradient-stage text-white py-24">
         <div className="container-stage max-w-4xl text-center">
           <p className="font-display italic text-3xl md:text-5xl leading-tight text-balance">
-            “Hacer teatro independiente, hoy, es una forma de no mentirse.
+            “Te propongo no solo ir a ver.
             <br />
-            <span className="text-gold">Y mostrarlo es una forma de cuidarlo.”</span>
+            <span className="text-gold">Te propongo verte a vos en lo que ves.”</span>
           </p>
         </div>
       </section>
