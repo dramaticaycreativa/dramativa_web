@@ -56,6 +56,7 @@ export const Cartelera = ({ onGoReviews: _ }: { onGoReviews: () => void }) => {
 
   const filtered = useMemo(() => {
     return events
+      .filter((e) => !e.hidden)
       .filter((e) => (filter === "todos" ? true : e.type === filter))
       .filter((e) => e.title.toLowerCase().includes(query.toLowerCase()));
   }, [events, query, filter]);

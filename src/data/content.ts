@@ -20,6 +20,7 @@ export interface CulturalEvent {
   image?: string | null;
   tags?: EventTag[];
   ticketUrl?: string | null;
+  hidden?: boolean;
 }
 
 export interface Review {
@@ -92,6 +93,17 @@ export const escuelas: Escuela[] = [
     mapsUrl: "https://maps.app.goo.gl/DYPE7s1eFXBW6uuY8",
     modalidad: "Presencial",
   },
+  {
+    id: "e5",
+    nombre: "Taller de teatro para adultos · Teatro El Pasillo",
+    docente: "Guillermo Suárez",
+    horarios: "Jue · 20 a 22 hs (taller anual)",
+    inicio: "Inscripción abierta · sin experiencia previa",
+    precio: "$40.000",
+    whatsapp: "https://wa.me/5493883313947",
+    mapsUrl: "https://www.google.com/maps/search/?api=1&query=Teatro+El+Pasillo+Jos%C3%A9+de+la+Iglesia+1190+Jujuy",
+    modalidad: "Presencial",
+  },
 ];
 
 // Mapper DB row -> CulturalEvent
@@ -108,4 +120,5 @@ export const mapEvent = (row: any): CulturalEvent => ({
   image: row.image,
   tags: row.tags ?? [],
   ticketUrl: row.ticket_url,
+  hidden: row.hidden ?? false,
 });
