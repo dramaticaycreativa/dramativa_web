@@ -1,5 +1,5 @@
 import portrait from "@/assets/dramativa-portrait.jpg";
-import { Instagram, Facebook, Youtube } from "lucide-react";
+import { Instagram, Youtube } from "lucide-react";
 
 const TikTokIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
@@ -7,12 +7,10 @@ const TikTokIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-// TODO: reemplazar por las URLs reales de Dramática y Creativa.
 const socials = [
-  { Icon: Instagram, label: "Instagram", href: "https://instagram.com/dramaticaycreativa" },
-  { Icon: TikTokIcon, label: "TikTok", href: "https://tiktok.com/@dramaticaycreativa" },
-  { Icon: Facebook, label: "Facebook", href: "https://facebook.com/dramaticaycreativa" },
-  { Icon: Youtube, label: "YouTube", href: "https://youtube.com/@dramaticaycreativa" },
+  { Icon: Instagram, label: "Instagram", href: "https://www.instagram.com/dramaticaycreativa/" },
+  { Icon: TikTokIcon, label: "TikTok", href: "https://www.tiktok.com/@dramaticaycreativa" },
+  { Icon: Youtube, label: "YouTube", href: "https://www.youtube.com/@Dramaticaycreativa" },
 ];
 
 const ejes = [
