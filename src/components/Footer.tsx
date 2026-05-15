@@ -21,7 +21,9 @@ export const Footer = () => {
         </div>
         <div>
           <p className="text-xs uppercase tracking-[0.3em] text-gold mb-3">Contacto</p>
-          <p className="text-sm text-white/60">hola@dramativa.com</p>
+          <a href="mailto:dramaticaycreativa@gmail.com" className="text-sm text-white/60 hover:text-gold transition-colors">
+            dramaticaycreativa@gmail.com
+          </a>
         </div>
       </div>
       <div className="border-t border-white/10">
