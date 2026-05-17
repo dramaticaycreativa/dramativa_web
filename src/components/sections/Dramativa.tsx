@@ -1,4 +1,4 @@
-import portrait from "@/assets/dramativa-portrait.jpg";
+import portrait from "@/assets/dramativa-portrait.png";
 import { Instagram, Youtube } from "lucide-react";
 
 const TikTokIcon = ({ className }: { className?: string }) => (

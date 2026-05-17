@@ -12,6 +12,7 @@ const tabs = [
   { id: "cartelera", label: "Cartelera" },
   { id: "resenas", label: "Reseñas" },
   { id: "estudiar", label: "Dónde estudiar" },
+  { id: "dramativa", label: "Dramativa" },
 ];
 
 export const TabsNav = ({ active, onChange }: TabsNavProps) => {

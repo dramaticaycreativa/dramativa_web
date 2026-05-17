@@ -6,7 +6,7 @@ import { Resenas } from "@/components/sections/Resenas";
 import { Estudiar } from "@/components/sections/Estudiar";
 import { Footer } from "@/components/Footer";
 
-const validTabs = ["cartelera", "resenas", "estudiar"] as const;
+const validTabs = ["cartelera", "resenas", "estudiar", "dramativa"] as const;
 type Tab = (typeof validTabs)[number];
 
 const sectionParam: Record<string, Tab> = {
@@ -14,6 +14,7 @@ const sectionParam: Record<string, Tab> = {
   resenas: "resenas",
   cartelera: "cartelera",
   estudiar: "estudiar",
+  dramativa: "dramativa",
 };
 
 const Index = () => {
@@ -44,6 +45,7 @@ const Index = () => {
           {tab === "cartelera" && <Cartelera onGoReviews={() => handleChange("resenas")} />}
           {tab === "resenas" && <Resenas />}
           {tab === "estudiar" && <Estudiar />}
+          {tab === "dramativa" && <Dramativa />}
         </div>
       </main>
       <Footer />
