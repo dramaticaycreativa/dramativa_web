@@ -85,7 +85,25 @@ export const Cartelera = ({ onGoReviews: _ }: { onGoReviews: () => void }) => {
           </div>
         </div>
 
-        {/* CONTROLS */}
+        {/* CTA · ESCRIBIME SOBRE TU OBRA */}
+        <div className="relative ticket-card p-6 md:p-8 mb-10 flex flex-col md:flex-row md:items-center gap-5 md:gap-8">
+          <div className="flex-1">
+            <p className="text-xs tracking-[0.4em] uppercase text-gold mb-2">¿Tenés una obra?</p>
+            <h2 className="font-display text-2xl md:text-3xl leading-tight text-balance">
+              ¿Querés que escriba sobre tu obra?
+            </h2>
+            <p className="text-sm text-muted-foreground mt-2 max-w-xl">
+              Si dirigís, actuás o producís teatro independiente en Jujuy y querés sumarte a la cartelera, escribime.
+            </p>
+          </div>
+          <a
+            href="mailto:dramaticaycreativa@gmail.com?subject=Quiero%20sumar%20mi%20obra%20a%20la%20cartelera"
+            className="inline-flex items-center justify-center gap-2 bg-gold text-gold-foreground hover:bg-gold/90 px-6 py-3 text-sm font-semibold uppercase tracking-wider transition-colors whitespace-nowrap"
+          >
+            <Mail className="w-4 h-4" /> Escribime
+          </a>
+        </div>
+
         <div className="flex flex-col lg:flex-row gap-4 mb-10">
           <div className="relative flex-1">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
