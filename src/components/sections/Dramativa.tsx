@@ -1,5 +1,5 @@
 import portrait from "@/assets/dramativa-portrait.png";
-import { Instagram, Youtube } from "lucide-react";
+import { Instagram, Youtube, Mail } from "lucide-react";
 
 const TikTokIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
@@ -16,26 +16,16 @@ const socials = [
 const ejes = [
   {
     n: "01",
-    t: "Identidad vs. mandato",
-    d: "Lo que se espera de nosotras (maternidad, vocación, los roles asignados) tensionado con lo que realmente queremos ser.",
-  },
-  {
-    n: "02",
     t: "El amor en sus zonas oscuras",
     d: "Dependencia, control, sacrificio, imposibles. Hablar del amor sin endulzarlo.",
   },
   {
-    n: "03",
-    t: "Soledad vs. comunidad",
-    d: "Lo colectivo como respuesta al dolor individual. Encontrarse con otros como acto político.",
-  },
-  {
-    n: "04",
+    n: "02",
     t: "Verdad vs. apariencia",
     d: "Las redes, el “estar bien”, las estructuras que nos piden mostrar lo que no sentimos.",
   },
   {
-    n: "05",
+    n: "03",
     t: "El teatro como experiencia transformadora",
     d: "No entretenimiento: una herramienta para pensar, sentir y vincularse.",
   },
@@ -45,19 +35,25 @@ export const Dramativa = () => {
   return (
     <article>
       {/* HERO · MANIFIESTO */}
-      <section className="relative bg-gradient-stage text-white overflow-hidden">
-        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top,_hsl(46_67%_56%/0.4),_transparent_60%)]" />
+      <section
+        className="relative overflow-hidden text-foreground"
+        style={{
+          background:
+            "linear-gradient(180deg, hsl(220 8% 90%) 0%, hsl(220 10% 78%) 60%, hsl(220 12% 68%) 100%)",
+        }}
+      >
+        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(ellipse_at_top,_hsl(46_67%_56%/0.35),_transparent_60%)]" />
         <div className="container-stage relative grid md:grid-cols-12 gap-10 py-20 md:py-32 items-center">
           <div className="md:col-span-7 animate-curtain-rise">
             <p className="ornament text-gold uppercase text-xs tracking-[0.4em] mb-6 inline-block">
               Manifiesto
             </p>
-            <h1 className="font-display text-5xl md:text-7xl lg:text-8xl leading-[0.95] mb-6 text-balance">
+            <h1 className="font-display text-5xl md:text-7xl lg:text-8xl leading-[0.95] mb-6 text-balance text-primary-deep">
               No traduzco obras.
               <br />
               <em className="text-gold not-italic font-normal italic">Traduzco lo que nos pasa.</em>
             </h1>
-            <p className="text-lg md:text-xl text-white/80 max-w-xl leading-relaxed">
+            <p className="text-lg md:text-xl text-primary-deep/80 max-w-xl leading-relaxed">
               Dramática y Creativa no es una agenda cultural. Es un puente entre el teatro
               independiente jujeño y vos: una excusa para hablar de lo que sentimos, conectarnos
               con otros y animarnos a mirar lo que muchas veces evitamos.
@@ -65,7 +61,7 @@ export const Dramativa = () => {
           </div>
           <div className="md:col-span-5 animate-fade-up">
             <div className="relative">
-              <div className="absolute -inset-4 border border-gold/40 -rotate-2" />
+              <div className="absolute -inset-4 border border-gold/60 -rotate-2" />
               <img
                 src={portrait}
                 alt="Retrato editorial de Dramática y Creativa"
@@ -93,7 +89,6 @@ export const Dramativa = () => {
           </p>
           <p>
             Mi propuesta no es que vayas a ver una obra. Es que te veas a vos en lo que ves.
-            Por eso no vendo funciones: activo experiencias.
           </p>
           <p>
             Le hablo a quienes no van habitualmente al teatro pero sí consumen contenido que
@@ -172,6 +167,27 @@ export const Dramativa = () => {
             <br />
             <span className="text-gold">Te propongo verte a vos en lo que ves.”</span>
           </p>
+        </div>
+      </section>
+
+      {/* CTA · ESCRIBIME */}
+      <section className="container-stage py-20">
+        <div className="relative max-w-4xl mx-auto ticket-card p-10 md:p-14 text-center">
+          <div className="absolute -inset-2 border border-gold/40 pointer-events-none" />
+          <p className="text-xs tracking-[0.4em] uppercase text-gold mb-4">¿Tenés una obra?</p>
+          <h2 className="font-display text-3xl md:text-5xl mb-5 text-balance">
+            ¿Querés que escriba sobre tu obra?
+          </h2>
+          <p className="text-muted-foreground max-w-xl mx-auto mb-8 leading-relaxed">
+            Si dirigís, actuás o producís teatro independiente en Jujuy y querés que tu obra
+            sea parte de Dramática y Creativa, escribime.
+          </p>
+          <a
+            href="mailto:dramaticaycreativa@gmail.com?subject=Quiero%20que%20escribas%20sobre%20mi%20obra"
+            className="inline-flex items-center gap-2 bg-gold text-gold-foreground hover:bg-gold/90 px-7 py-3.5 text-sm font-semibold uppercase tracking-wider transition-colors"
+          >
+            <Mail className="w-4 h-4" /> Escribime
+          </a>
         </div>
       </section>
 
