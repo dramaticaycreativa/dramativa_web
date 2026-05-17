@@ -267,6 +267,32 @@ const EventCard = ({
           {expanded ? "Ver menos" : "Ver más"}
         </Button>
         <Button
+          onClick={async () => {
+            const text = `${event.title} · ${formatDate(event.date)} · ${event.venue}`;
+            const url = typeof window !== "undefined" ? window.location.href : "";
+            const shareData = { title: event.title, text, url };
+            try {
+              if (navigator.share) {
+                await navigator.share(shareData);
+              } else {
+                const wa = `https://wa.me/?text=${encodeURIComponent(`${text} ${url}`)}`;
+                window.open(wa, "_blank", "noopener,noreferrer");
+              }
+            } catch {
+              try {
+                await navigator.clipboard.writeText(`${text} ${url}`);
+                toast({ title: "Enlace copiado", description: "Lo podés pegar donde quieras." });
+              } catch { /* noop */ }
+            }
+          }}
+          variant="outline"
+          className="border-primary-deep text-primary-deep hover:bg-primary-deep hover:text-primary-foreground rounded-none px-3"
+          aria-label="Compartir evento"
+          title="Compartir evento"
+        >
+          <Share2 className="w-4 h-4" />
+        </Button>
+        <Button
           onClick={onReview}
           className="bg-gold text-gold-foreground hover:bg-gold/90 rounded-none px-3"
           aria-label="Dejar reseña"
@@ -275,6 +301,7 @@ const EventCard = ({
           ★
         </Button>
       </div>
+
     </article>
   );
 };
